@@ -1,0 +1,39 @@
+# === Node.js ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# === TypeScript ===
+*.tsbuildinfo
+dist/
+
+# === Environment Variables ===
+.env
+.env.*.local
+.env.local
+
+# === Logs ===
+logs/
+*.log
+*.log.*
+
+# === OS/Editor ===
+.DS_Store
+Thumbs.db
+.vscode/
+*.code-workspace
+.idea/
+*.swp
+
+# === React + Vite ===
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+frontend/coverage/
+
+# === Fastify ===
+backend/dist/
+backend/coverage/
