@@ -5,9 +5,18 @@ import { Pool } from 'pg';
 
 dotenv.config();
 
-const pool = new Pool({
-    connectionString: process.env.DB_URL,
-});
+const connectionString = process.env.DB_URL;
 
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
+if (!connectionString) {
+    throw new Error('Missing DB_URL in environment variables');
+}
+
+const adapter = new PrismaPg({ connectionString });
+
+// Declare global prisma type to prevent duplicate clients in dev
+declare global {
+    var prisma: PrismaClient | undefined;
+}
+export const prisma =
+    global.prisma ||
+    new PrismaClient({ adapter, log: ['query', 'warn', 'error'] });
