@@ -8,17 +8,25 @@ datasource db {
     url      = env("DB_URL")
 }
 
+model GeoIP {
+    id        String  @id @default(uuid())
+}
+
 model Country {
-    id         Int      @id @default(autoincrement())
-    name       String
-    short_name String
-    regions    Region[]
+    id      String   @id @default(uuid())
+    name    String   @db.VarChar(100)
+    isoCode String   @db.VarChar(2)
+    regions Region[]
+    @@unique([isoCode])
 }
 
 model Region {
-    id         Int     @id @default(autoincrement())
-    name       String
-    short_name String
-    country    Country @relation(fields: [countryId], references: [id])
-    countryId  Int
+    id        String  @id @default(uuid())
+    name      String  @db.VarChar(100)
+    code      String? @db.VarChar(10)
+    countryId String
+    country Country @relation(fields: [countryId], references: [id])
+
+    @@unique([countryId, name])
+    @@index([countryId])
 }
