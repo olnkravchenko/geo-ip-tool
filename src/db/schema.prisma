@@ -10,6 +10,17 @@ datasource db {
 
 model GeoIP {
     id        String  @id @default(uuid())
+    startIp   BigInt
+    endIp     BigInt
+    countryId String
+    regionId  String?
+
+    country Country @relation(fields: [countryId], references: [id])
+    region  Region? @relation(fields: [regionId], references: [id])
+
+    @@index([startIp, endIp])
+    @@index([countryId])
+    @@index([regionId])
 }
 
 model Country {
@@ -17,6 +28,8 @@ model Country {
     name    String   @db.VarChar(100)
     isoCode String   @db.VarChar(2)
     regions Region[]
+    geoIPs  GeoIP[]
+
     @@unique([isoCode])
 }
 
@@ -25,6 +38,8 @@ model Region {
     name      String  @db.VarChar(100)
     code      String? @db.VarChar(10)
     countryId String
+    geoIPs    GeoIP[]
+
     country Country @relation(fields: [countryId], references: [id])
 
     @@unique([countryId, name])
