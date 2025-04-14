@@ -1,27 +1,24 @@
-
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["prismaSchemaFolder", "driverAdapters"]
+    provider        = "prisma-client-js"
+    previewFeatures = ["prismaSchemaFolder", "driverAdapters"]
 }
-
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DB_URL")
+    provider = "postgresql"
+    url      = env("DB_URL")
 }
 
-
 model Country {
-  id Int      @id @default(autoincrement())
-  name String
-  short_name String
-  regions Region[]
+    id         Int      @id @default(autoincrement())
+    name       String
+    short_name String
+    regions    Region[]
 }
 
 model Region {
-  id Int      @id @default(autoincrement())
-  name String
-  short_name String
-  country Country @relation(fields: [countryId], references: [id])
-  countryId Int
+    id         Int     @id @default(autoincrement())
+    name       String
+    short_name String
+    country    Country @relation(fields: [countryId], references: [id])
+    countryId  Int
 }
