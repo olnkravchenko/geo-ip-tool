@@ -1,5 +1,5 @@
 import { CountryDTO, CountryResponseDTO } from '../dtos/country.dto';
-import { IPResponseDTO } from '../dtos/ip.dto';
+import { GeoIPResponseDTO } from '../dtos/geoIp.dto';
 import { RegionDTO, RegionResponseDTO } from '../dtos/region.dto';
 
 export class GeoRepository {
@@ -8,7 +8,7 @@ export class GeoRepository {
     /**
      * addIp
      */
-    public addIp(ip: string): IPResponseDTO {
+    public addIp(ip: string): GeoIPResponseDTO {
         return { id: '123', address: '0.0.0.0' };
     }
 
@@ -16,27 +16,27 @@ export class GeoRepository {
      * getRegions
      */
     public getRegions(): RegionResponseDTO[] {
-        return [{ id: '123', name: 'Donbass', short_name: 'DNB', country: { id: '123', name: 'Ukraine', short_name: 'UA' } }];
+        return [{ id: '123', name: 'Donbass', code: 'DNB', country: { id: '123', name: 'Ukraine', isoCode: 'UA' } }];
     }
 
     /**
      * getCountries
      */
     public getCountries(): CountryResponseDTO[] {
-        return [{ id: '123', name: 'Ukraine', short_name: 'UA' }];
+        return [{ id: '123', name: 'Ukraine', isoCode: 'UA' }];
     }
 
     /**
      * getIpByRegion
      */
-    public getIpByRegion(region: RegionDTO): IPResponseDTO[] | null {
+    public getIpByRegion(region: RegionDTO): GeoIPResponseDTO[] | null {
         return [{ id: '123', address: '0.0.0.0' }];
     }
 
     /**
      * getIpByCountry
      */
-    public getIpByCountry(country: CountryDTO): IPResponseDTO[] | null {
+    public getIpByCountry(country: CountryDTO): GeoIPResponseDTO[] | null {
         return [{ id: '123', address: '0.0.0.0' }];
     }
 }

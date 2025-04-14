@@ -1,10 +1,10 @@
 export type CountryDTO = {
     name?: string;
-    short_name?: string;
+    isoCode?: string;
 };
 
 export type CountryResponseDTO = {
     id: string;
     name: string;
-    short_name: string;
+    isoCode: string;
 };
