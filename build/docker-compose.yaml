@@ -1,31 +1,30 @@
-name: "geo-ip-processor"
+name: 'geo-ip-processor'
 
 services:
-  api:
-    container_name: ts-service
-    depends_on:
-      - db
-    build:
-      context: ..
-      dockerfile: build/ts_service.Dockerfile
-    working_dir: /app
-    ports:
-      - 3000:3000
-    command: npm run dev # comment for prod
-    volumes:
-      - ..:/app
+    api:
+        container_name: ts-service
+        depends_on:
+            - db
+        build:
+            context: ..
+            dockerfile: build/ts_service.Dockerfile
+        working_dir: /app
+        ports:
+            - 3000:3000
+        command: npm run dev # comment for prod
+        volumes:
+            - ..:/app
 
-  db:
-    image: postgres:15
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_USER: ${PG_USER}
-      POSTGRES_PASSWORD: ${PG_PASSWORD}
-      POSTGRES_DB: ${PG_DB}
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
+    db:
+        image: postgres:15
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_USER: ${PG_USER}
+            POSTGRES_PASSWORD: ${PG_PASSWORD}
+            POSTGRES_DB: ${PG_DB}
+        volumes:
+            - pgdata:/var/lib/postgresql/data
 
 volumes:
-  pgdata:
+    pgdata:

@@ -1,4 +1,4 @@
 export type IPResponseDTO = {
-  id: string;
-  address: string;
-}
+    id: string;
+    address: string;
+};
