@@ -16,7 +16,14 @@ export class GeoRepository {
      * getRegions
      */
     public getRegions(): RegionResponseDTO[] {
-        return [{ id: '123', name: 'Donbass', code: 'DNB', country: { id: '123', name: 'Ukraine', isoCode: 'UA' } }];
+        return [
+            {
+                id: '123',
+                name: 'Donbass',
+                code: 'DNB',
+                country: { id: '123', name: 'Ukraine', isoCode: 'UA' },
+            },
+        ];
     }
 
     /**
