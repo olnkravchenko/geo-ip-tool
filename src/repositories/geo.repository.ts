@@ -1,12 +1,12 @@
 import { CountryDTO, CountryResponseDTO } from '../dtos/country.dto';
-import { GeoIpDTO, GeoIPResponseDTO } from '../dtos/geoIp.dto';
+import { GeoIPDTO, GeoIPResponseDTO } from '../dtos/geoIp.dto';
 import { RegionDTO, RegionResponseDTO } from '../dtos/region.dto';
 
 export class GeoRepository {
     /**
-     * addIp
+     * addIP
      */
-    public async addIp(ip: GeoIpDTO): Promise<GeoIPResponseDTO> {
+    public async addIP(ip: GeoIPDTO): Promise<GeoIPResponseDTO> {
         const rows = await prisma.geoIP.create({ data: ip });
         return rows;
     }
@@ -28,16 +28,20 @@ export class GeoRepository {
     }
 
     /**
-     * getIpByRegion
+     * getIPByCoords
      */
-    // public getIpByRegion(region: RegionDTO): GeoIPResponseDTO[] | null {
-    //     return [{ id: '123', startIp: '0.0.0.0' }];
-    // }
+    public async getIPByCoords(latitude: string, longtitude: string) {}
 
     /**
-     * getIpByCountry
+     * getLocByIP
      */
-    // public getIpByCountry(country: CountryDTO): GeoIPResponseDTO[] | null {
-    //     return [{ id: '123', address: '0.0.0.0' }];
-    // }
+    public async getLocByIP(ip: string): Promise<GeoIPResponseDTO | null> {
+        const row = await prisma.geoIP.findFirst({
+            where: {
+                startIp: { lte: BigInt(ip) },
+                endIp: { gte: BigInt(ip) },
+            },
+        });
+        return row;
+    }
 }

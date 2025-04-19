@@ -1,4 +1,4 @@
-export type GeoIpDTO = {
+export type GeoIPDTO = {
     startIp: bigint;
     endIp: bigint;
     countryId: string;
