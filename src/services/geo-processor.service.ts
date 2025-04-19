@@ -9,8 +9,20 @@ export class GeoProcessorService {
     /**
      * ip2location
      */
-    public ip2location(ips: string[]) {
-        // parse ip into location
+    public async ip2location(
+        ips: string[],
+    ): Promise<Result<{ ip: string; location: GeoIPResponseDTO }, string>[]> {
+        const locs = await Promise.all(
+            ips.map(async (ip) => {
+                const loc = await this.geoRep.getLocByIP(ip);
+
+                if (loc == null) {
+                    return err(`Location for ${ip} not found`);
+                }
+                return ok({ ip: ip, location: loc });
+            }),
+        );
+        return locs;
     }
 
     /**
