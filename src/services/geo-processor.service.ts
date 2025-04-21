@@ -3,9 +3,13 @@ import { CountryDTO } from '../dtos/country.dto';
 import { GeoIPResponseDTO } from '../dtos/geoIp.dto';
 import { RegionDTO } from '../dtos/region.dto';
 import { GeoRepository } from '../repositories/geo.repository';
+import { RegionRepository } from '../repositories/region.repository';
 
 export class GeoProcessorService {
-    constructor(private geoRep: GeoRepository) {}
+    constructor(
+        private geoRep: GeoRepository,
+        private regionRep: RegionRepository,
+    ) {}
     /**
      * ip2location
      */

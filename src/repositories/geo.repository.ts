@@ -12,14 +12,6 @@ export class GeoRepository {
     }
 
     /**
-     * getRegions
-     */
-    public async getRegions(): Promise<RegionResponseDTO[]> {
-        const rows = await prisma.region.findMany();
-        return rows;
-    }
-
-    /**
      * getCountries
      */
     public async getCountries(): Promise<CountryResponseDTO[]> {
