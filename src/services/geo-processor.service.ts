@@ -2,6 +2,7 @@ import { err, ok, Result } from 'neverthrow';
 import { CountryDTO } from '../dtos/country.dto';
 import { GeoIPRelatedResponseDTO } from '../dtos/geoIp.dto';
 import { RegionDTO, RegionIPResponseDTO } from '../dtos/region.dto';
+import { CountryRepository } from '../repositories/country.repository';
 import { GeoRepository } from '../repositories/geo.repository';
 import { RegionRepository } from '../repositories/region.repository';
 
@@ -9,6 +10,7 @@ export class GeoProcessorService {
     constructor(
         private geoRepo: GeoRepository,
         private regionRepo: RegionRepository,
+private countryRepo: CountryRepository,
     ) {}
     /**
      * ip2location

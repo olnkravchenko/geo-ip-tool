@@ -15,14 +15,6 @@ export class GeoRepository {
     }
 
     /**
-     * getCountries
-     */
-    public async getCountries(): Promise<CountryResponseDTO[]> {
-        const rows = await prisma.country.findMany();
-        return rows;
-    }
-
-    /**
      * getIPByCoords
      */
     public async getIPByCoords(latitude: string, longtitude: string) {}
