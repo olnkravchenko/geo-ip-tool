@@ -7,8 +7,8 @@ import { RegionRepository } from '../repositories/region.repository';
 
 export class GeoProcessorService {
     constructor(
-        private geoRep: GeoRepository,
-        private regionRep: RegionRepository,
+        private geoRepo: GeoRepository,
+        private regionRepo: RegionRepository,
     ) {}
     /**
      * ip2location
@@ -20,7 +20,7 @@ export class GeoProcessorService {
     > {
         const locs = await Promise.all(
             ips.map(async (ip) => {
-                const loc = await this.geoRep.getLocByIP(ip);
+                const loc = await this.geoRepo.getLocByIP(ip);
 
                 if (loc == null) {
                     return err(`Location for ${ip} not found`);
@@ -39,7 +39,7 @@ export class GeoProcessorService {
         code,
     }: RegionDTO): Promise<Result<RegionIPResponseDTO, string>[]> {
         // check whether region exists
-        const regions = await this.regionRep.getRegion(name, code);
+        const regions = await this.regionRepo.getRegion(name, code);
 
         if (regions.length == 0) {
             return [err('Region not found')];
@@ -47,13 +47,13 @@ export class GeoProcessorService {
         // filter IPs by region
         const ipRanges = await Promise.all(
             regions.map(async (r) => {
-                const reg = await this.regionRep.getRegionIPs(r.id);
+                const ips = await this.regionRepo.getRegionIPs(r.id);
 
-                if (reg == null) {
+                if (ips == null) {
                     return err(`IPs for ${r.name} not found`);
                 }
 
-                return ok(reg);
+                return ok(ips);
             }),
         );
         return ipRanges;
