@@ -1,6 +1,9 @@
-import { CountryDTO, CountryResponseDTO } from '../dtos/country.dto';
-import { GeoIPDTO, GeoIPResponseDTO } from '../dtos/geoIp.dto';
-import { RegionDTO, RegionResponseDTO } from '../dtos/region.dto';
+import { CountryResponseDTO } from '../dtos/country.dto';
+import {
+    GeoIPDTO,
+    GeoIPRelatedResponseDTO,
+    GeoIPResponseDTO,
+} from '../dtos/geoIp.dto';
 
 export class GeoRepository {
     /**
@@ -27,8 +30,17 @@ export class GeoRepository {
     /**
      * getLocByIP
      */
-    public async getLocByIP(ip: string): Promise<GeoIPResponseDTO | null> {
+    public async getLocByIP(
+        ip: string,
+    ): Promise<GeoIPRelatedResponseDTO | null> {
         const row = await prisma.geoIP.findFirst({
+            select: {
+                id: true,
+                startIp: true,
+                endIp: true,
+                country: true,
+                region: true,
+            },
             where: {
                 startIp: { lte: BigInt(ip) },
                 endIp: { gte: BigInt(ip) },
