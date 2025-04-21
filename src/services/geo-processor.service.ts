@@ -1,5 +1,5 @@
 import { err, ok, Result } from 'neverthrow';
-import { CountryDTO } from '../dtos/country.dto';
+import { CountryDTO, CountryIPResponseDTO } from '../dtos/country.dto';
 import { GeoIPRelatedResponseDTO } from '../dtos/geoIp.dto';
 import { RegionDTO, RegionIPResponseDTO } from '../dtos/region.dto';
 import { CountryRepository } from '../repositories/country.repository';
@@ -10,7 +10,7 @@ export class GeoProcessorService {
     constructor(
         private geoRepo: GeoRepository,
         private regionRepo: RegionRepository,
-private countryRepo: CountryRepository,
+        private countryRepo: CountryRepository,
     ) {}
     /**
      * ip2location
@@ -64,8 +64,28 @@ private countryRepo: CountryRepository,
     /**
      * getIpByCountry
      */
-    public getIpByCountry(country: CountryDTO) {
+    public async getIpByCountry({
+        name,
+        isoCode,
+    }: CountryDTO): Promise<Result<CountryIPResponseDTO, string>[]> {
         // check whether country exists
+        const countries = await this.countryRepo.getCountry(name, isoCode);
+
+        if (countries.length == 0) {
+            return [err('Country not found')];
+        }
         // filter IPs by country
+        const ipRanges = await Promise.all(
+            countries.map(async (c) => {
+                const ips = await this.countryRepo.getCountryIPs(c.id);
+
+                if (ips == null) {
+                    return err(`IPs for ${c.name} not found`);
+                }
+
+                return ok(ips);
+            }),
+        );
+        return ipRanges;
     }
 }
