@@ -1,6 +1,6 @@
 import { err, ok, Result } from 'neverthrow';
 import { CountryDTO } from '../dtos/country.dto';
-import { GeoIPRelatedResponseDTO, GeoIPResponseDTO } from '../dtos/geoIp.dto';
+import { GeoIPRelatedResponseDTO } from '../dtos/geoIp.dto';
 import { RegionDTO, RegionIPResponseDTO } from '../dtos/region.dto';
 import { GeoRepository } from '../repositories/geo.repository';
 import { RegionRepository } from '../repositories/region.repository';
