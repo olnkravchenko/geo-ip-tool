@@ -4,10 +4,10 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "tsc --watch",
-        "build": "tsc",
-        "start": "node dist/index.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "clean": "rm -rf dist",
+        "build": "npm run clean && tsc -p tsconfig.json",
+        "dev": "node dist/server.js",
+        "start": "node dist/index.js"
     },
     "prisma": {
         "schema": "src/db/schema.prisma"
@@ -26,7 +26,7 @@
     "license": "ISC",
     "type": "commonjs",
     "devDependencies": {
-"@fastify/sensible": "^6.0.3",
+        "@fastify/sensible": "^6.0.3",
         "@types/node": "^22.14.1",
         "@types/pg": "^8.11.12",
         "prettier": "^3.5.3",
@@ -38,7 +38,7 @@
         "@prisma/client": "^6.6.0",
         "dotenv": "^16.5.0",
         "eslint-plugin-neverthrow": "^1.1.4",
-"fastify": "^5.3.2",
+        "fastify": "^5.3.2",
         "neverthrow": "^8.2.0",
         "pg": "^8.14.1"
     }
