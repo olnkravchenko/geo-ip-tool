@@ -2,7 +2,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv';
 
-dotenv.config({ path: '../../build/.env' });
+dotenv.config({ path: '../../.env' });
 
 const connectionString = process.env.DB_URL;
 
@@ -20,7 +20,7 @@ const client =
     globalThis.prisma ??
     new PrismaClient({ adapter, log: ['query', 'warn', 'error'] });
 
-if (process.env.NODE_ENV !== 'prod') {
+if (process.env.ENV_MODE !== 'prod') {
     globalThis.prisma = client;
 }
 
