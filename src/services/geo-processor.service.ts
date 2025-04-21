@@ -35,26 +35,26 @@ export class GeoProcessorService {
     public async getIpByRegion({
         name,
         code,
-    }: RegionDTO): Promise<Result<GeoIPResponseDTO[], string>> {
+    }: RegionDTO): Promise<Result<RegionIPResponseDTO, string>[]> {
         // check whether region exists
-        const regions = await this.geoRep.getRegions();
+        const regions = await this.regionRep.getRegion(name, code);
 
-        const filteredRegions = regions.filter(
-            (r) => r.name === (name ?? null) || r.code === (code ?? null),
-        );
-        if (filteredRegions.length == 0) {
-            return err('Region not found');
+        if (regions.length == 0) {
+            return [err('Region not found')];
         }
         // filter IPs by region
-        return ok([
-            {
-                id: '1',
-                startIp: 123n,
-                endIp: 456n,
-                countryId: '345',
-                regionId: null,
-            },
-        ]);
+        const ipRanges = await Promise.all(
+            regions.map(async (r) => {
+                const reg = await this.regionRep.getRegionIPs(r.id);
+
+                if (reg == null) {
+                    return err(`IPs for ${r.name} not found`);
+                }
+
+                return ok(reg);
+            }),
+        );
+        return ipRanges;
     }
 
     /**
