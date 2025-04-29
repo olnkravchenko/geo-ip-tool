@@ -1,11 +1,13 @@
+import prisma from '../db/db-client';
 import { RegionIPResponseDTO, RegionResponseDTO } from '../dtos/region.dto';
 
 export class RegionRepository {
+    constructor(private readonly db = prisma) {}
     /**
      * getRegions
      */
     public async getRegions(): Promise<RegionResponseDTO[]> {
-        const rows = await prisma.region.findMany();
+        const rows = await this.db.region.findMany();
         return rows;
     }
 
@@ -16,7 +18,7 @@ export class RegionRepository {
         name?: string,
         code?: string,
     ): Promise<RegionResponseDTO[]> {
-        const rows = await prisma.region.findMany({
+        const rows = await this.db.region.findMany({
             where: {
                 OR: [
                     { name: { equals: name, mode: 'insensitive' } },
@@ -33,7 +35,7 @@ export class RegionRepository {
     public async getRegionIPs(
         regionID: string,
     ): Promise<RegionIPResponseDTO | null> {
-        const rows = await prisma.region.findFirst({
+        const rows = await this.db.region.findFirst({
             select: {
                 id: true,
                 name: true,

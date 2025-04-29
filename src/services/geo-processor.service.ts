@@ -8,9 +8,9 @@ import { RegionRepository } from '../repositories/region.repository';
 
 export class GeoProcessorService {
     constructor(
-        private geoRepo: GeoRepository,
-        private regionRepo: RegionRepository,
-        private countryRepo: CountryRepository,
+        private readonly geoRepo: GeoRepository,
+        private readonly regionRepo: RegionRepository,
+        private readonly countryRepo: CountryRepository,
     ) {}
     /**
      * ip2location
