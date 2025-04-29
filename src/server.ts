@@ -4,6 +4,8 @@ import { fastify } from 'fastify';
 import CountryRepository from './repositories/country.repository';
 import GeoRepository from './repositories/geo.repository';
 import RegionRepository from './repositories/region.repository';
+import geoRoutes from './routes/geo';
+import healthRoutes from './routes/health';
 import GeoProcessorService from './services/geo-processor.service';
 
 dotenv.config({ path: '../.env' });
@@ -26,11 +28,9 @@ const buildServer = async () => {
         countryRepo,
     );
     server.decorate('geoProcessorService', geoProcessorService);
-
-    // basic routing
-    server.get('/hello', async (req, reply) => {
-        return 'Hello world!\n';
-    });
+    // add routes
+    server.register(geoRoutes);
+    server.register(healthRoutes);
 
     return server;
 };
