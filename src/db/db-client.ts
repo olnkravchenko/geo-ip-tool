@@ -12,16 +12,8 @@ if (!connectionString) {
 
 const adapter = new PrismaPg({ connectionString });
 
-// Declare global prisma type to prevent duplicate clients in dev
-declare global {
-    var prisma: PrismaClient;
-}
-const client =
-    globalThis.prisma ??
-    new PrismaClient({ adapter, log: ['query', 'warn', 'error'] });
-
-if (process.env.ENV_MODE !== 'prod') {
-    globalThis.prisma = client;
-}
-
-export const prisma = client;
+const prisma = new PrismaClient({
+    adapter,
+    log: ['query', 'warn', 'error'],
+});
+export default prisma;
