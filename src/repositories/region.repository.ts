@@ -1,7 +1,7 @@
 import prisma from '../db/db-client';
 import { RegionIPResponseDTO, RegionResponseDTO } from '../dtos/region.dto';
 
-export class RegionRepository {
+export default class RegionRepository {
     constructor(private readonly db = prisma) {}
     /**
      * getRegions

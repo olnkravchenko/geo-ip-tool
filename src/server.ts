@@ -1,10 +1,10 @@
 import FastifySensible from '@fastify/sensible';
 import dotenv from 'dotenv';
 import { fastify } from 'fastify';
-import { CountryRepository } from './repositories/country.repository';
-import { GeoRepository } from './repositories/geo.repository';
-import { RegionRepository } from './repositories/region.repository';
-import { GeoProcessorService } from './services/geo-processor.service';
+import CountryRepository from './repositories/country.repository';
+import GeoRepository from './repositories/geo.repository';
+import RegionRepository from './repositories/region.repository';
+import GeoProcessorService from './services/geo-processor.service';
 
 dotenv.config({ path: '../.env' });
 

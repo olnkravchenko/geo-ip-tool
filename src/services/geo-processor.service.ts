@@ -2,11 +2,11 @@ import { err, ok, Result } from 'neverthrow';
 import { CountryDTO, CountryIPResponseDTO } from '../dtos/country.dto';
 import { GeoIPRelatedResponseDTO } from '../dtos/geoIp.dto';
 import { RegionDTO, RegionIPResponseDTO } from '../dtos/region.dto';
-import { CountryRepository } from '../repositories/country.repository';
-import { GeoRepository } from '../repositories/geo.repository';
-import { RegionRepository } from '../repositories/region.repository';
+import CountryRepository from '../repositories/country.repository';
+import GeoRepository from '../repositories/geo.repository';
+import RegionRepository from '../repositories/region.repository';
 
-export class GeoProcessorService {
+export default class GeoProcessorService {
     constructor(
         private readonly geoRepo: GeoRepository,
         private readonly regionRepo: RegionRepository,

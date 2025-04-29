@@ -5,7 +5,7 @@ import {
     GeoIPResponseDTO,
 } from '../dtos/geoIp.dto';
 
-export class GeoRepository {
+export default class GeoRepository {
     constructor(private readonly db = prisma) {}
     /**
      * addIP
