@@ -17,6 +17,26 @@ const geoRoutes: FastifyPluginAsync = async (app) => {
             },
         );
     });
+
+    app.post('/ip/bulk', async (req, reply) => {
+        const { ips } = req.body as { ips: string[] };
+        const result = await app.geoProcessorService.ip2location(ips);
+
+        const data = result.map((r) =>
+            r.match(
+                (data) => {
+                    req.log.info(`200 OK ${data.ip}`);
+                    return data;
+                },
+                (cause) => {
+                    req.log.error(cause.message);
+                    return cause;
+                },
+            ),
+        );
+
+        return reply.code(200).send(data);
+    });
 };
 
 export default geoRoutes;
