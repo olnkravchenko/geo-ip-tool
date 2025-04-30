@@ -1,6 +1,11 @@
 import { FastifyPluginAsync } from 'fastify';
 import { GeoIPFailureDTO, GeoIPRelatedSuccessDTO } from '../dtos/geoIp.dto';
 
+type GroupedResults = {
+    oks: GeoIPRelatedSuccessDTO[];
+    errors: GeoIPFailureDTO[];
+};
+
 const geoRoutes: FastifyPluginAsync = async (app) => {
     app.get('/ip/:ip', async (req, reply) => {
         const { ip } = req.params as { ip: string };
@@ -22,20 +27,20 @@ const geoRoutes: FastifyPluginAsync = async (app) => {
         const { ips } = req.body as { ips: string[] };
         const result = await app.geoProcessorService.ip2location(ips);
 
-        const data = result.map((r) =>
-            r.match(
-                (data) => {
-                    req.log.info(`200 OK ${data.ip}`);
-                    return data;
-                },
-                (cause) => {
-                    req.log.error(cause.message);
-                    return cause;
-                },
-            ),
+        const groupedData = result.reduce<GroupedResults>(
+            (acc, res) => {
+                res.match(
+                    (data) => acc.oks.push(data),
+                    (cause) => acc.errors.push(cause),
+                );
+                return acc;
+            },
+            { oks: [], errors: [] },
         );
+        req.log.info(groupedData.oks);
+        req.log.error(groupedData.errors);
 
-        return reply.code(200).send(data);
+        return reply.code(200).send(groupedData);
     });
 };
 
