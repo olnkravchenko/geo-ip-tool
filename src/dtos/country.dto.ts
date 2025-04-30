@@ -3,13 +3,13 @@ export type CountryDTO = {
     isoCode?: string;
 };
 
-export type CountryResponseDTO = {
+export type CountryRecordDTO = {
     id: string;
     name: string;
     isoCode: string;
 };
 
-export type CountryIPResponseDTO = {
+export type CountryIPRecordDTO = {
     id: string;
     name: string;
     isoCode: string | null;

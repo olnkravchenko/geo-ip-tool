@@ -1,7 +1,7 @@
 import { err, ok, Result } from 'neverthrow';
-import { CountryDTO, CountryIPResponseDTO } from '../dtos/country.dto';
+import { CountryDTO, CountryIPRecordDTO } from '../dtos/country.dto';
 import { GeoIPFailureDTO, GeoIPRelatedSuccessDTO } from '../dtos/geoIp.dto';
-import { RegionDTO, RegionIPResponseDTO } from '../dtos/region.dto';
+import { RegionDTO, RegionIPRecordDTO } from '../dtos/region.dto';
 import CountryRepository from '../repositories/country.repository';
 import GeoRepository from '../repositories/geo.repository';
 import RegionRepository from '../repositories/region.repository';
@@ -40,7 +40,7 @@ export default class GeoProcessorService {
     public async getIpByRegion({
         name,
         code,
-    }: RegionDTO): Promise<Result<RegionIPResponseDTO, string>[]> {
+    }: RegionDTO): Promise<Result<RegionIPRecordDTO, string>[]> {
         // check whether region exists
         const regions = await this.regionRepo.getRegion(name, code);
 
@@ -68,7 +68,7 @@ export default class GeoProcessorService {
     public async getIpByCountry({
         name,
         isoCode,
-    }: CountryDTO): Promise<Result<CountryIPResponseDTO, string>[]> {
+    }: CountryDTO): Promise<Result<CountryIPRecordDTO, string>[]> {
         // check whether country exists
         const countries = await this.countryRepo.getCountry(name, isoCode);
 

@@ -1,12 +1,12 @@
 import prisma from '../db/db-client';
-import { CountryIPResponseDTO, CountryResponseDTO } from '../dtos/country.dto';
+import { CountryIPRecordDTO, CountryRecordDTO } from '../dtos/country.dto';
 
 export default class CountryRepository {
     constructor(private readonly db = prisma) {}
     /**
      * getCountries
      */
-    public async getCountries(): Promise<CountryResponseDTO[]> {
+    public async getCountries(): Promise<CountryRecordDTO[]> {
         const rows = await this.db.country.findMany();
         return rows;
     }
@@ -17,7 +17,7 @@ export default class CountryRepository {
     public async getCountry(
         name?: string,
         isoCode?: string,
-    ): Promise<CountryResponseDTO[]> {
+    ): Promise<CountryRecordDTO[]> {
         const rows = await this.db.country.findMany({
             where: {
                 OR: [
@@ -34,7 +34,7 @@ export default class CountryRepository {
      */
     public async getCountryIPs(
         countryID: string,
-    ): Promise<CountryIPResponseDTO | null> {
+    ): Promise<CountryIPRecordDTO | null> {
         const rows = await this.db.country.findFirst({
             select: {
                 id: true,

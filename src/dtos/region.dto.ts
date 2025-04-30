@@ -3,14 +3,14 @@ export type RegionDTO = {
     code?: string;
 };
 
-export type RegionResponseDTO = {
+export type RegionRecordDTO = {
     id: string;
     name: string;
     code: string | null;
     countryId: string;
 };
 
-export type RegionIPResponseDTO = {
+export type RegionIPRecordDTO = {
     id: string;
     name: string;
     code: string | null;
