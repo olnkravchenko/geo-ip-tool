@@ -6,7 +6,7 @@ type GroupedResults = {
     errors: GeoIPFailureDTO[];
 };
 
-const geoRoutes: FastifyPluginAsync = async (app) => {
+const geoIPRoutes: FastifyPluginAsync = async (app) => {
     app.get('/:ip', async (req, reply) => {
         const { ip } = req.params as { ip: string };
         const result = await app.geoProcessorService.ip2location([ip]);
@@ -44,4 +44,4 @@ const geoRoutes: FastifyPluginAsync = async (app) => {
     });
 };
 
-export default geoRoutes;
+export default geoIPRoutes;

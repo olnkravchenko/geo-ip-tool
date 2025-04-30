@@ -4,7 +4,7 @@ import { fastify } from 'fastify';
 import CountryRepository from './repositories/country.repository';
 import GeoRepository from './repositories/geo.repository';
 import RegionRepository from './repositories/region.repository';
-import geoRoutes from './routes/geo';
+import geoIPRoutes from './routes/geoIp';
 import healthRoutes from './routes/health';
 import locationRoutes from './routes/location';
 import GeoProcessorService from './services/geo-processor.service';
@@ -30,7 +30,7 @@ const buildServer = async () => {
     );
     server.decorate('geoProcessorService', geoProcessorService);
     // add routes
-    server.register(geoRoutes, { prefix: '/ip' });
+    server.register(geoIPRoutes, { prefix: '/ip' });
     server.register(locationRoutes, { prefix: '/location' });
     server.register(healthRoutes);
 
