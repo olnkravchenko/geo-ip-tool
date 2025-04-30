@@ -5,7 +5,7 @@ export type GeoIPDTO = {
     regionId?: string;
 };
 
-export type GeoIPResponseDTO = {
+export type GeoIPRecordDTO = {
     id: string;
     startIp: bigint;
     endIp: bigint;
@@ -13,7 +13,7 @@ export type GeoIPResponseDTO = {
     regionId: string | null;
 };
 
-export type GeoIPRelatedResponseDTO = {
+export type GeoIPRelatedRecordDTO = {
     id: string;
     startIp: bigint;
     endIp: bigint;

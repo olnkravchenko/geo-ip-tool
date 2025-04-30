@@ -1,8 +1,8 @@
 import prisma from '../db/db-client';
 import {
     GeoIPDTO,
-    GeoIPRelatedResponseDTO,
-    GeoIPResponseDTO,
+    GeoIPRecordDTO,
+    GeoIPRelatedRecordDTO,
 } from '../dtos/geoIp.dto';
 
 export default class GeoRepository {
@@ -10,9 +10,9 @@ export default class GeoRepository {
     /**
      * addIP
      */
-    public async addIP(ip: GeoIPDTO): Promise<GeoIPResponseDTO> {
-        const rows = await this.db.geoIP.create({ data: ip });
-        return rows;
+    public async addIP(ip: GeoIPDTO): Promise<GeoIPRecordDTO> {
+        const row = await this.db.geoIP.create({ data: ip });
+        return row;
     }
 
     /**
@@ -23,9 +23,7 @@ export default class GeoRepository {
     /**
      * getLocByIP
      */
-    public async getLocByIP(
-        ip: string,
-    ): Promise<GeoIPRelatedResponseDTO | null> {
+    public async getLocByIP(ip: string): Promise<GeoIPRelatedRecordDTO | null> {
         const row = await this.db.geoIP.findFirst({
             select: {
                 id: true,
