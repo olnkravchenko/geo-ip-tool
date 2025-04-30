@@ -6,6 +6,7 @@ import GeoRepository from './repositories/geo.repository';
 import RegionRepository from './repositories/region.repository';
 import geoRoutes from './routes/geo';
 import healthRoutes from './routes/health';
+import locationRoutes from './routes/location';
 import GeoProcessorService from './services/geo-processor.service';
 
 dotenv.config({ path: '../.env' });
@@ -30,6 +31,7 @@ const buildServer = async () => {
     server.decorate('geoProcessorService', geoProcessorService);
     // add routes
     server.register(geoRoutes);
+    server.register(locationRoutes);
     server.register(healthRoutes);
 
     return server;
