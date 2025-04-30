@@ -89,4 +89,10 @@ export default class GeoProcessorService {
         );
         return ipRanges;
     }
+
+    // TODO: implement
+    /**
+     * getIpByCoords
+     */
+    public async getIpByCoords(latitude: string, longtitude: string) {}
 }
