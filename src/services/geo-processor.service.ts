@@ -18,14 +18,20 @@ export default class GeoProcessorService {
     public async ip2location(
         ips: string[],
     ): Promise<
-        Result<{ ip: string; location: GeoIPRelatedResponseDTO }, string>[]
+        Result<
+            { ip: string; location: GeoIPRelatedResponseDTO },
+            { ip: string; message: string }
+        >[]
     > {
         const locs = await Promise.all(
             ips.map(async (ip) => {
                 const loc = await this.geoRepo.getLocByIP(ip);
 
                 if (loc == null) {
-                    return err(`Location for ${ip} not found`);
+                    return err({
+                        ip: ip,
+                        message: `Not found`,
+                    });
                 }
                 return ok({ ip: ip, location: loc });
             }),
