@@ -30,8 +30,8 @@ const buildServer = async () => {
     );
     server.decorate('geoProcessorService', geoProcessorService);
     // add routes
-    server.register(geoRoutes);
-    server.register(locationRoutes);
+    server.register(geoRoutes, { prefix: '/ip' });
+    server.register(locationRoutes, { prefix: '/location' });
     server.register(healthRoutes);
 
     return server;

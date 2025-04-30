@@ -7,7 +7,7 @@ type GroupedResults = {
 };
 
 const geoRoutes: FastifyPluginAsync = async (app) => {
-    app.get('/ip/:ip', async (req, reply) => {
+    app.get('/:ip', async (req, reply) => {
         const { ip } = req.params as { ip: string };
         const result = await app.geoProcessorService.ip2location([ip]);
 
@@ -23,7 +23,7 @@ const geoRoutes: FastifyPluginAsync = async (app) => {
         );
     });
 
-    app.post('/ip/bulk', async (req, reply) => {
+    app.post('/bulk', async (req, reply) => {
         const { ips } = req.body as { ips: string[] };
         const result = await app.geoProcessorService.ip2location(ips);
 
