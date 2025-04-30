@@ -29,3 +29,13 @@ export type GeoIPRelatedRecordDTO = {
         code: string | null;
     } | null;
 };
+
+export type GeoIPRelatedSuccessDTO = {
+    ip: string;
+    location: GeoIPRelatedRecordDTO;
+};
+
+export type GeoIPFailureDTO = {
+    ip: string;
+    message: string;
+};

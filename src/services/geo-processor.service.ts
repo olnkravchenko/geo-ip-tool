@@ -1,6 +1,6 @@
 import { err, ok, Result } from 'neverthrow';
 import { CountryDTO, CountryIPResponseDTO } from '../dtos/country.dto';
-import { GeoIPRelatedResponseDTO } from '../dtos/geoIp.dto';
+import { GeoIPFailureDTO, GeoIPRelatedSuccessDTO } from '../dtos/geoIp.dto';
 import { RegionDTO, RegionIPResponseDTO } from '../dtos/region.dto';
 import CountryRepository from '../repositories/country.repository';
 import GeoRepository from '../repositories/geo.repository';
@@ -17,12 +17,7 @@ export default class GeoProcessorService {
      */
     public async ip2location(
         ips: string[],
-    ): Promise<
-        Result<
-            { ip: string; location: GeoIPRelatedResponseDTO },
-            { ip: string; message: string }
-        >[]
-    > {
+    ): Promise<Result<GeoIPRelatedSuccessDTO, GeoIPFailureDTO>[]> {
         const locs = await Promise.all(
             ips.map(async (ip) => {
                 const loc = await this.geoRepo.getLocByIP(ip);
