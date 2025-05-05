@@ -10,11 +10,14 @@ datasource db {
 }
 
 model GeoIP {
-    id        String  @id @default(uuid())
-    startIp   BigInt
-    endIp     BigInt
-    countryId String
-    regionId  String?
+    id             String  @id @default(uuid())
+    startIp        BigInt
+    endIp          BigInt
+    countryId      String
+    regionId       String?
+    latitude       Decimal
+    longitude      Decimal
+    accuracyRadius Int
 
     country Country @relation(fields: [countryId], references: [id])
     region  Region? @relation(fields: [regionId], references: [id])
