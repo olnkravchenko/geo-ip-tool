@@ -41,14 +41,26 @@ continentName String @db.VarChar(100)
 }
 
 model Region {
-    id        String  @id @default(uuid())
-    name      String  @db.VarChar(100)
-    code      String? @db.VarChar(10)
-    countryId String
-    geoIPs    GeoIP[]
+    id             String      @id @default(uuid())
+    name           String      @db.VarChar(100)
+    isoCode        String?     @db.VarChar(3)
+    regionLevel    RegionLevel @default(HIGHEST)
+    countryId      String
+    parentRegionId String?
 
-    country Country @relation(fields: [countryId], references: [id])
+    country      Country  @relation(fields: [countryId], references: [id])
+    parentRegion Region?  @relation("RegionHierarchy", fields: [parentRegionId], references: [id])
+    childRegions Region[] @relation("RegionHierarchy")
 
-    @@unique([countryId, name])
+    geoIPs GeoIP[]
+
+    @@unique([countryId, isoCode])
     @@index([countryId])
+    @@index([regionLevel])
+}
+
+enum RegionLevel {
+    HIGHEST
+    LOWEST
+    CITY
 }
