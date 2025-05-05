@@ -32,7 +32,7 @@ model Country {
     name          String @db.VarChar(100)
     isoCode       String @db.VarChar(2)
     continentCode String @db.VarChar(2)
-continentName String @db.VarChar(100)
+    continentName String @db.VarChar(100)
 
     regions Region[]
     geoIPs  GeoIP[]
