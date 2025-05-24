@@ -17,7 +17,7 @@ model GeoIP {
     regionId       String?
     latitude       Decimal
     longitude      Decimal
-    accuracyRadius Int
+    accuracyRadius Int     @default(20)
 
     country Country @relation(fields: [countryId], references: [id])
     region  Region? @relation(fields: [regionId], references: [id])
