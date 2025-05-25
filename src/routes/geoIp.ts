@@ -40,6 +40,7 @@ const geoIPRoutes: FastifyPluginAsync = async (app) => {
         req.log.info(groupedData.oks);
         req.log.error(groupedData.errors);
 
+        // SEARCH: investigate edge cases and responses for them
         return reply.code(200).send(groupedData);
     });
 };
