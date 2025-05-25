@@ -1,3 +1,5 @@
+import { GeoIPRecordDTO } from './geoIp.dto';
+
 export type CountryDTO = {
     name?: string;
     isoCode?: string;
@@ -17,14 +19,5 @@ export type CountryIPRecordDTO = {
     isoCode: string;
     continentCode: string;
     continentName: string;
-    geoIPs: {
-        id: string;
-        startIp: bigint;
-        endIp: bigint;
-        countryId: string;
-        regionId: string | null;
-        latitude: number;
-        longitude: number;
-        accuracyRadius: number;
-    }[];
+    geoIPs: GeoIPRecordDTO[];
 };

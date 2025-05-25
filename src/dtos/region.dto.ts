@@ -1,3 +1,6 @@
+import { RegionLevel } from '@prisma/client';
+import { GeoIPRecordDTO } from './geoIp.dto';
+
 export type RegionDTO = {
     name?: string;
     isoCode?: string;
@@ -19,20 +22,5 @@ export type RegionIPRecordDTO = {
     regionLevel: RegionLevel;
     countryId: string;
     parentRegionId: string | null;
-    geoIPs: {
-        id: string;
-        startIp: bigint;
-        endIp: bigint;
-        countryId: string;
-        regionId: string | null;
-        latitude: number;
-        longitude: number;
-        accuracyRadius: number;
-    }[];
+    geoIPs: GeoIPRecordDTO[];
 };
-
-enum RegionLevel {
-    HIGHEST,
-    LOWEST,
-    CITY,
-}

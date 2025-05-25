@@ -1,3 +1,7 @@
+import { Decimal } from '@prisma/client/runtime/library';
+import { CountryRecordDTO } from './country.dto';
+import { RegionRecordDTO } from './region.dto';
+
 export type GeoIPDTO = {
     startIp: bigint;
     endIp: bigint;
@@ -5,7 +9,7 @@ export type GeoIPDTO = {
     regionId?: string;
     latitude: number;
     longitude: number;
-accuracyRadius?: number;
+    accuracyRadius?: number;
 };
 
 export type GeoIPRecordDTO = {
@@ -23,21 +27,10 @@ export type GeoIPRelatedRecordDTO = {
     id: string;
     startIp: bigint;
     endIp: bigint;
-    country: {
-        id: string;
-        name: string;
-        isoCode: string;
-        continentCode: string;
-        continentName: string;
-    };
-    region: {
-        id: string;
-        countryId: string;
-        name: string;
-        code: string | null;
-    } | null;
-    latitude: number;
-    longitude: number;
+    country: CountryRecordDTO;
+    region: RegionRecordDTO | null;
+    latitude: Decimal;
+    longitude: Decimal;
     accuracyRadius: number;
 };
 
