@@ -5,6 +5,7 @@ export type GeoIPDTO = {
     regionId?: string;
     latitude: number;
     longitude: number;
+accuracyRadius?: number;
 };
 
 export type GeoIPRecordDTO = {
@@ -13,8 +14,8 @@ export type GeoIPRecordDTO = {
     endIp: bigint;
     countryId: string;
     regionId: string | null;
-    latitude: number;
-    longitude: number;
+    latitude: Decimal;
+    longitude: Decimal;
     accuracyRadius: number;
 };
 
