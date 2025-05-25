@@ -40,6 +40,8 @@ export default class CountryRepository {
                 id: true,
                 name: true,
                 isoCode: true,
+                continentCode: true,
+                continentName: true,
                 geoIPs: true,
             },
             where: { id: { equals: countryID } },

@@ -16,13 +16,13 @@ export default class RegionRepository {
      */
     public async getRegion(
         name?: string,
-        code?: string,
+        isoCode?: string,
     ): Promise<RegionRecordDTO[]> {
         const rows = await this.db.region.findMany({
             where: {
                 OR: [
                     { name: { equals: name, mode: 'insensitive' } },
-                    { code: { equals: code, mode: 'insensitive' } },
+                    { isoCode: { equals: isoCode, mode: 'insensitive' } },
                 ],
             },
         });
@@ -39,8 +39,10 @@ export default class RegionRepository {
             select: {
                 id: true,
                 name: true,
-                code: true,
+                isoCode: true,
+                regionLevel: true,
                 countryId: true,
+                parentRegionId: true,
                 geoIPs: true,
             },
             where: { id: { equals: regionID } },

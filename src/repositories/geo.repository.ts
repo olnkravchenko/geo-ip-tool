@@ -18,7 +18,7 @@ export default class GeoRepository {
     /**
      * getIPByCoords
      */
-    public async getIPByCoords(latitude: string, longtitude: string) {}
+    public async getIPByCoords(latitude: string, longitude: string) {}
 
     /**
      * getLocByIP
@@ -31,6 +31,9 @@ export default class GeoRepository {
                 endIp: true,
                 country: true,
                 region: true,
+                latitude: true,
+                longitude: true,
+                accuracyRadius: true,
             },
             where: {
                 startIp: { lte: BigInt(ip) },
