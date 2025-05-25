@@ -39,10 +39,10 @@ export default class GeoProcessorService {
      */
     public async getIpByRegion({
         name,
-        code,
+        isoCode,
     }: RegionDTO): Promise<Result<RegionIPRecordDTO, string>[]> {
         // check whether region exists
-        const regions = await this.regionRepo.getRegion(name, code);
+        const regions = await this.regionRepo.getRegion(name, isoCode);
 
         if (regions.length == 0) {
             return [err('Region not found')];
@@ -55,7 +55,6 @@ export default class GeoProcessorService {
                 if (ips == null) {
                     return err(`IPs for ${r.name} not found`);
                 }
-
                 return ok(ips);
             }),
         );
@@ -83,7 +82,6 @@ export default class GeoProcessorService {
                 if (ips == null) {
                     return err(`IPs for ${c.name} not found`);
                 }
-
                 return ok(ips);
             }),
         );
@@ -94,5 +92,5 @@ export default class GeoProcessorService {
     /**
      * getIpByCoords
      */
-    public async getIpByCoords(latitude: string, longtitude: string) {}
+    public async getIpByCoords(latitude: string, longitude: string) {}
 }
