@@ -25,7 +25,7 @@ export default class GeoProcessorService {
                 if (loc == null) {
                     return err({
                         ip: ip,
-                        message: `Not found`,
+                        message: 'Not found',
                     });
                 }
                 return ok({ ip: ip, location: loc });
