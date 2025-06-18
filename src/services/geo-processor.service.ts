@@ -92,9 +92,20 @@ export default class GeoProcessorService {
         return ipRanges;
     }
 
-    // TODO: implement
     /**
      * getIpByCoords
      */
-    public async getIpByCoords(latitude: string, longitude: string) {}
+    public async getIpByCoords(
+        latitude: string,
+        longitude: string,
+    ): Promise<Result<GeoIPRecordDTO, string>[]> {
+        const geoIps = await this.geoRepo.getIPByCoords(latitude, longitude);
+
+        if (!geoIps || geoIps.length === 0) {
+            return [err('IPs not found for the given coordinates')];
+        }
+
+        const results = geoIps.map((geoIp) => ok(geoIp));
+        return results;
+    }
 }
