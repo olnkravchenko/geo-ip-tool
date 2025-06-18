@@ -41,6 +41,14 @@ const geoIPRoutes: FastifyPluginAsync = async (app) => {
         req.log.error(groupedData.errors);
 
         // SEARCH: investigate edge cases and responses for them
+        if (groupedData.oks.length === 0) {
+            return reply.code(404).send({
+                error: 'No locations found',
+                message: 'No locations were found for the provided IPs',
+                errors: groupedData.errors,
+            });
+        }
+
         return reply.code(200).send(groupedData);
     });
 };
