@@ -24,21 +24,29 @@
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "type": "commonjs",
+    "type": "module",
     "devDependencies": {
+        "@eslint/js": "^9.29.0",
         "@fastify/sensible": "^6.0.3",
         "@types/node": "^22.14.1",
         "@types/pg": "^8.11.12",
+        "@typescript-eslint/eslint-plugin": "^8.34.1",
+        "@typescript-eslint/parser": "^8.34.1",
         "csv-parse": "^5.6.0",
+        "eslint": "^9.29.0",
+        "eslint-plugin-jsdoc": "^51.0.3",
+        "eslint-plugin-neverthrow": "^1.1.4",
+        "eslint-plugin-react": "^7.37.5",
+        "globals": "^16.2.0",
         "prettier": "^3.5.3",
         "prisma": "^6.8.2",
-        "typescript": "^5.8.3"
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.34.1"
     },
     "dependencies": {
         "@prisma/adapter-pg": "^6.6.0",
         "@prisma/client": "^6.8.2",
         "dotenv": "^16.5.0",
-        "eslint-plugin-neverthrow": "^1.1.4",
         "fastify": "^5.3.2",
         "neverthrow": "^8.2.0",
         "pg": "^8.14.1"
