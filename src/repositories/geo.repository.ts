@@ -18,7 +18,40 @@ export default class GeoRepository {
     /**
      * getIPByCoords
      */
-    public async getIPByCoords(latitude: string, longitude: string) {}
+    public async getIPByCoords(
+        latitude: string,
+        longitude: string,
+    ): Promise<GeoIPRecordDTO[]> {
+        // find the most popular accuracy radius from the database
+        const accRadius = await this.db.geoIP.groupBy({
+            by: ['accuracyRadius'],
+            _count: {
+                accuracyRadius: true,
+            },
+            orderBy: {
+                _count: {
+                    accuracyRadius: 'desc',
+                },
+            },
+            take: 1,
+        });
+        const rad = accRadius[0]?._count?.accuracyRadius || 20;
+
+        const rows = await this.db.geoIP.findMany({
+            where: {
+                latitude: {
+                    gte: parseFloat(latitude) - rad,
+                    lte: parseFloat(latitude) + rad,
+                },
+                longitude: {
+                    gte: parseFloat(longitude) - rad,
+                    lte: parseFloat(longitude) + rad,
+                },
+            },
+        });
+
+        return rows;
+    }
 
     /**
      * getLocByIP
