@@ -34,9 +34,9 @@ export type GeoIPRelatedRecordDTO = {
     accuracyRadius: number;
 };
 
-export type GeoIPRelatedSuccessDTO = {
+export type GeoIPSuccessDTO = {
     ip: string;
-    location: GeoIPRelatedRecordDTO;
+    location: GeoIPRecordDTO | GeoIPRelatedRecordDTO;
 };
 
 export type GeoIPFailureDTO = {

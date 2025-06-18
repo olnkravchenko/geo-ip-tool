@@ -1,8 +1,8 @@
 import { FastifyPluginAsync } from 'fastify';
-import { GeoIPFailureDTO, GeoIPRelatedSuccessDTO } from '../dtos/geoIp.dto';
+import { GeoIPFailureDTO, GeoIPSuccessDTO } from '../dtos/geoIp.dto';
 
 type GroupedResults = {
-    oks: GeoIPRelatedSuccessDTO[];
+    oks: GeoIPSuccessDTO[];
     errors: GeoIPFailureDTO[];
 };
 
