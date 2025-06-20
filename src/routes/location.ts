@@ -1,4 +1,6 @@
 import { FastifyPluginAsync } from 'fastify';
+import { CountryFailureDTO, CountrySuccessDTO } from '../dtos/country.dto';
+import { processBulkResults } from '../utils/results-processing';
 
 const locationRoutes: FastifyPluginAsync = async (app) => {
     app.get('/coords', async (req, reply) => {
@@ -34,7 +36,13 @@ const locationRoutes: FastifyPluginAsync = async (app) => {
             name,
             isoCode,
         });
-        return reply.code(200).send(result);
+
+        const [statusCode, response] = processBulkResults<
+            CountrySuccessDTO,
+            CountryFailureDTO
+        >(result, req.log);
+
+        return reply.code(statusCode).send(response);
     });
 };
 
