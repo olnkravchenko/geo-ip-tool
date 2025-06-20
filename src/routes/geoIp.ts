@@ -1,10 +1,6 @@
 import { FastifyPluginAsync } from 'fastify';
 import { GeoIPFailureDTO, GeoIPSuccessDTO } from '../dtos/geoIp.dto';
-
-type GroupedResults = {
-    oks: GeoIPSuccessDTO[];
-    errors: GeoIPFailureDTO[];
-};
+import { processBulkResults } from '../utils/results-processing';
 
 const geoIPRoutes: FastifyPluginAsync = async (app) => {
     app.get('/:ip', async (req, reply) => {
@@ -27,29 +23,12 @@ const geoIPRoutes: FastifyPluginAsync = async (app) => {
         const { ips } = req.body as { ips: string[] };
         const result = await app.geoProcessorService.ip2location(ips);
 
-        const groupedData = result.reduce<GroupedResults>(
-            (acc, res) => {
-                res.match(
-                    (data) => acc.oks.push(data),
-                    (cause) => acc.errors.push(cause),
-                );
-                return acc;
-            },
-            { oks: [], errors: [] },
-        );
-        req.log.info(groupedData.oks);
-        req.log.error(groupedData.errors);
+        const [statusCode, response] = processBulkResults<
+            GeoIPSuccessDTO,
+            GeoIPFailureDTO
+        >(result, req.log);
 
-        // SEARCH: investigate edge cases and responses for them
-        if (groupedData.oks.length === 0) {
-            return reply.code(404).send({
-                error: 'No locations found',
-                message: 'No locations were found for the provided IPs',
-                errors: groupedData.errors,
-            });
-        }
-
-        return reply.code(200).send(groupedData);
+        return reply.code(statusCode).send(response);
     });
 };
 
