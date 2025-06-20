@@ -21,3 +21,12 @@ export type CountryIPRecordDTO = {
     continentName: string;
     geoIPs: GeoIPRecordDTO[];
 };
+
+export type CountrySuccessDTO = {
+    country: CountryRecordDTO | CountryIPRecordDTO;
+};
+
+export type CountryFailureDTO = {
+    country: CountryDTO | null;
+    message: string;
+};
