@@ -103,6 +103,8 @@ describe('GeoProcessorService', () => {
         });
 
         it('should handle multiple IPs', async () => {
+            const expectedResult = ok({ ip: validIP, location: mockGeoIPDetailed });
+            const expectedError = err({ ip: invalidIP, message: 'Not found' });
             mockGeoRepo.getLocByIP
                 .mockResolvedValueOnce(mockGeoIPDetailed)
                 .mockResolvedValueOnce(null);
@@ -110,8 +112,8 @@ describe('GeoProcessorService', () => {
             const result = await geoProcessorService.ip2location([validIP, invalidIP]);
 
             expect(result).toHaveLength(2);
-            expect(result[0]).toEqual(ok({ ip: validIP, location: mockGeoIPDetailed }));
-            expect(result[1]).toEqual(err({ ip: invalidIP, message: 'Not found' }));
+            expect(result[0]).toEqual(expectedResult);
+            expect(result[1]).toEqual(expectedError);
         });
     });
 
@@ -119,22 +121,24 @@ describe('GeoProcessorService', () => {
         const validRegion = { name: 'London', isoCode: 'LDN' };
 
         it('should return IPs for valid region', async () => {
+            const expectedResult = ok(mockRegionIPs);
             mockRegionRepo.getRegion.mockResolvedValueOnce([mockRegion]);
             mockRegionRepo.getRegionIPs.mockResolvedValueOnce(mockRegionIPs);
 
             const result = await geoProcessorService.getIpByRegion(validRegion);
 
             expect(result).toHaveLength(1);
-            expect(result[0]).toEqual(ok(mockRegionIPs));
+            expect(result[0]).toEqual(expectedResult);
         });
 
         it('should return error for non-existent region', async () => {
+            const expectedError = err('Region not found');
             mockRegionRepo.getRegion.mockResolvedValueOnce([]);
 
             const result = await geoProcessorService.getIpByRegion(validRegion);
 
             expect(result).toHaveLength(1);
-            expect(result[0]).toEqual(err('Region not found'));
+            expect(result[0]).toEqual(expectedError);
         });
     });
 
@@ -142,22 +146,24 @@ describe('GeoProcessorService', () => {
         const validCountry = { name: 'United Kingdom', isoCode: 'GB' };
 
         it('should return IPs for valid country', async () => {
+            const expectedResult = ok(mockCountryIPs);
             mockCountryRepo.getCountry.mockResolvedValueOnce([mockCountry]);
             mockCountryRepo.getCountryIPs.mockResolvedValueOnce(mockCountryIPs);
 
             const result = await geoProcessorService.getIpByCountry(validCountry);
 
             expect(result).toHaveLength(1);
-            expect(result[0]).toEqual(ok(mockCountryIPs));
+            expect(result[0]).toEqual(expectedResult);
         });
 
         it('should return error for non-existent country', async () => {
+            const expectedError = err('Country not found');
             mockCountryRepo.getCountry.mockResolvedValueOnce([]);
 
             const result = await geoProcessorService.getIpByCountry(validCountry);
 
             expect(result).toHaveLength(1);
-            expect(result[0]).toEqual(err('Country not found'));
+            expect(result[0]).toEqual(expectedError);
         });
     });
 
@@ -166,6 +172,7 @@ describe('GeoProcessorService', () => {
         const validLongitude = '-0.1278';
 
         it('should return IPs for valid coordinates', async () => {
+            const expectedResult = ok(mockGeoIP)
             mockGeoRepo.getIPByCoords.mockResolvedValueOnce([mockGeoIP]);
 
             const result = await geoProcessorService.getIpByCoords(
@@ -174,10 +181,11 @@ describe('GeoProcessorService', () => {
             );
 
             expect(result).toHaveLength(1);
-            expect(result[0]).toEqual(ok(mockGeoIP));
+            expect(result[0]).toEqual(expectedResult);
         });
 
         it('should return error for coordinates with no IPs', async () => {
+            const expectedError = err('IPs not found for the given coordinates');
             mockGeoRepo.getIPByCoords.mockResolvedValueOnce([]);
 
             const result = await geoProcessorService.getIpByCoords(
@@ -186,9 +194,7 @@ describe('GeoProcessorService', () => {
             );
 
             expect(result).toHaveLength(1);
-            expect(result[0]).toEqual(
-                err('IPs not found for the given coordinates')
-            );
+            expect(result[0]).toEqual(expectedError);
         });
     });
 });
