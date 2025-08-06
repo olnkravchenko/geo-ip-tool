@@ -1,6 +1,7 @@
 export default {
     preset: 'ts-jest',
     testEnvironment: 'node',
+    setupFilesAfterEnv: ['<rootDir>/tests/singleton.ts'],
     roots: ['<rootDir>/tests/'],
     moduleNameMapper: {
       '^@/(.*)$': '<rootDir>/src/$1',
