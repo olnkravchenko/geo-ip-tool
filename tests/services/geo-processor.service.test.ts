@@ -93,7 +93,7 @@ describe('GeoProcessorService', () => {
         });
 
         it('should return error for invalid IP', async () => {
-            const expectedError = { ip: invalidIP, message: 'Not found' };
+            const expectedError = err({ ip: invalidIP, message: 'Not found' });
             mockGeoRepo.getLocByIP.mockResolvedValueOnce(null);
 
             const result = await geoProcessorService.ip2location([invalidIP]);
