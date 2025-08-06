@@ -56,20 +56,11 @@ describe('GeoProcessorService', () => {
         accuracyRadius: 100
     }
     const mockRegionIPs: RegionIPRecordDTO = {
-        id: '1',
-        name: 'London',
-        isoCode: 'LDN',
-        regionLevel: RegionLevel.CITY,
-        countryId: 'GB',
-        parentRegionId: null,
+        ...mockRegion,
         geoIPs: [mockGeoIP]
     };
     const mockCountryIPs: CountryIPRecordDTO = {
-        id: '1',
-        name: 'London',
-        isoCode: 'LDN',
-        continentCode: 'EU',
-        continentName: 'Europe',
+        ...mockCountry,
         geoIPs: [mockGeoIP]
     };
 
